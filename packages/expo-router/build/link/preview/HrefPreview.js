@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HrefPreview = HrefPreview;
 exports.getParamsAndNodeFromHref = getParamsAndNodeFromHref;
+const native_1 = require("@react-navigation/native");
 const react_1 = require("react");
 const PreviewRouteContext_1 = require("./PreviewRouteContext");
 const router_store_1 = require("../../global-state/router-store");
@@ -23,7 +24,10 @@ function HrefPreview({ href }) {
     }
     const Component = (0, useScreens_1.getQualifiedRouteComponent)(routeNode);
     return (<PreviewRouteContext_1.PreviewRouteContext.Provider value={value}>
-      <Component navigation={navigation}/>
+      {/* Using NavigationContext to override useNavigation */}
+      <native_1.NavigationContext.Provider value={navigationPropWithWarnings}>
+        <Component navigation={navigation}/>
+      </native_1.NavigationContext.Provider>
     </PreviewRouteContext_1.PreviewRouteContext.Provider>);
 }
 function getParamsAndNodeFromHref(href) {
@@ -39,4 +43,44 @@ function getParamsAndNodeFromHref(href) {
     }
     return { params, routeNode, state: initialState };
 }
+const displayWarningForProp = (prop) => {
+    if (process.env.NODE_ENV !== 'production') {
+        console.warn(`navigation.${prop} should not be used in a previewed screen. To fix this issue, wrap navigation calls with 'if (!isPreview) { ... }'.`);
+    }
+};
+const createNOOPWithWarning = (prop) => () => displayWarningForProp(prop);
+const navigationPropWithWarnings = {
+    setParams: createNOOPWithWarning('setParams'),
+    setOptions: createNOOPWithWarning('setOptions'),
+    addListener: (() => () => { }),
+    removeListener: () => { },
+    isFocused: () => true,
+    canGoBack: () => false,
+    dispatch: createNOOPWithWarning('dispatch'),
+    navigate: createNOOPWithWarning('navigate'),
+    goBack: createNOOPWithWarning('goBack'),
+    reset: createNOOPWithWarning('reset'),
+    push: createNOOPWithWarning('push'),
+    pop: createNOOPWithWarning('pop'),
+    popToTop: createNOOPWithWarning('popToTop'),
+    navigateDeprecated: createNOOPWithWarning('navigateDeprecated'),
+    preload: createNOOPWithWarning('preload'),
+    getId: () => {
+        displayWarningForProp('getId');
+        return '';
+    },
+    // @ts-expect-error
+    getParent: createNOOPWithWarning('getParent'),
+    getState: () => {
+        displayWarningForProp('getState');
+        return {
+            key: '',
+            index: 0,
+            routeNames: [],
+            routes: [],
+            type: 'stack',
+            stale: false,
+        };
+    },
+};
 //# sourceMappingURL=HrefPreview.js.map

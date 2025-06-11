@@ -1,3 +1,4 @@
+import { type ParamListBase } from '@react-navigation/native';
 import { RouteNode } from '../../Route';
 import { Href, UnknownOutputParams } from '../../types';
 export declare function HrefPreview({ href }: {
@@ -6,12 +7,12 @@ export declare function HrefPreview({ href }: {
 export declare function getParamsAndNodeFromHref(href: Href): {
     params: UnknownOutputParams;
     routeNode: RouteNode | null | undefined;
-    state: import("@react-navigation/routers").PartialState<Readonly<{
+    state: import("@react-navigation/native").PartialState<Readonly<{
         key: string;
         index: number;
         routeNames: string[];
         history?: unknown[];
-        routes: import("@react-navigation/routers").NavigationRoute<import("@react-navigation/routers").ParamListBase, string>[];
+        routes: import("@react-navigation/native").NavigationRoute<ParamListBase, string>[];
         type: string;
         stale: false;
     }>> | undefined;
