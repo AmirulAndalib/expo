@@ -5,8 +5,7 @@ class PeekAndPopView: ExpoView, UIContextMenuInteractionDelegate {
   private var preview: PeekAndPopPreviewView?
   private var interaction: UIContextMenuInteraction?
   private var nextScreenId: String?
-  private var actions: [[String: String]] = []
-  private var preferredContentSize: CGSize = .zero
+  private var actions: [PeekAndPopActionView] = []
 
   private let peekAndPopNavigation: PeekAndPopNavigation = PeekAndPopNavigation()
 
@@ -29,20 +28,6 @@ class PeekAndPopView: ExpoView, UIContextMenuInteractionDelegate {
     peekAndPopNavigation.updatePreloadedView(screenId, with: self)
   }
 
-  func setActions(_ actions: [[String: String]]) {
-    self.actions = actions
-  }
-
-  func setPreferredContentSize(_ size: [String: Int]) {
-    let width = size["width"] ?? Int(UIScreen.main.bounds.width)
-    let height = size["height"] ?? Int(UIScreen.main.bounds.height)
-    if width < 0 || height < 0 {
-      print("Preferred content size cannot be negative (\(width), \(height))")
-      return
-    }
-    self.preferredContentSize = CGSize(width: max(width, 0), height: max(height, 0))
-  }
-
   // MARK: - Children
 
   override func mountChildComponentView(_ childComponentView: UIView, index: Int) {
@@ -57,6 +42,8 @@ class PeekAndPopView: ExpoView, UIContextMenuInteractionDelegate {
       if let interaction = self.interaction, let trigger = self.trigger {
         trigger.addInteraction(interaction)
       }
+    } else if let actionView = childComponentView as? PeekAndPopActionView {
+      actions.append(actionView)
     } else {
       print(
         "ExpoRouter: Unknown child component view (\(childComponentView)) mounted to PeekAndPopView"
@@ -76,6 +63,10 @@ class PeekAndPopView: ExpoView, UIContextMenuInteractionDelegate {
       if let interaction = self.interaction {
         trigger?.removeInteraction(interaction)
       }
+    } else if let actionView = child as? PeekAndPopActionView {
+      actions.removeAll(where: {
+        $0 == actionView
+      })
     } else {
       print(
         "ExpoRouter: Unknown child component view (\(child)) unmounted from PeekAndPopView")
@@ -121,7 +112,7 @@ class PeekAndPopView: ExpoView, UIContextMenuInteractionDelegate {
     willDisplayMenuFor configuration: UIContextMenuConfiguration,
     animator: UIContextMenuInteractionAnimating?
   ) {
-    // This happens when preview starts to become visible. 
+    // This happens when preview starts to become visible.
     // It is not yet fully extended at this moment though
     self.onDidPreviewOpen()
     animator?.addCompletion {
@@ -161,21 +152,21 @@ class PeekAndPopView: ExpoView, UIContextMenuInteractionDelegate {
 
     let vc = PreviewViewController(peekAndPopPreview: preview)
     vc.view.addSubview(preview)
-    vc.preferredContentSize = self.preferredContentSize
+    let preferredSize = preview.preferredContentSize
+    vc.preferredContentSize.width = preferredSize.width
+    vc.preferredContentSize.height = preferredSize.height
     return vc
   }
 
   private func createContextMenu() -> UIMenu {
-    let uiActions = actions.filter {
-      // Making sure that only actions with non-empty id and title are displayed
-      ($0["id"]?.isEmpty == false && $0["title"]?.isEmpty == false)
-    }
-    .map { action in
+    print("actions \(actions)")
+
+    let uiActions = actions.map { action in
       return UIAction(
-        title: action["title"] ?? ""
+        title: action.title
       ) { _ in
         self.onActionSelected([
-          "id": action["id"] ?? ""
+          "id": action.id
         ])
       }
     }

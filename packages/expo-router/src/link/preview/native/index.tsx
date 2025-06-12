@@ -4,6 +4,7 @@ import {
   PeekAndPopPreviewViewProps,
   PeekAndPopTriggerViewProps,
   PeekAndPopViewProps,
+  type PeekAndPopActionViewProps,
 } from './types';
 
 const NotAvailableOnThisPlatformComponent = () => {
@@ -15,4 +16,6 @@ export const PeekAndPopView = (_: PeekAndPopViewProps) => NotAvailableOnThisPlat
 export const PeekAndPopPreviewView = (_: PeekAndPopPreviewViewProps) =>
   NotAvailableOnThisPlatformComponent();
 export const PeekAndPopTriggerView = (_: PeekAndPopTriggerViewProps) =>
+  NotAvailableOnThisPlatformComponent();
+export const PeekAndPopActionView = (_: PeekAndPopActionViewProps) =>
   NotAvailableOnThisPlatformComponent();

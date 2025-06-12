@@ -9,14 +9,6 @@ public class PeekAndPopModule: Module {
         view.setNextScreenId(nextScreenId)
       }
 
-      Prop("actions") { (view: PeekAndPopView, actions: [[String: String]]) in
-        view.setActions(actions)
-      }
-
-      Prop("preferredContentSize") { (view: PeekAndPopView, size: [String: Int]) in
-        view.setPreferredContentSize(size)
-      }
-
       Events(
         "onPreviewTapped",
         "onWillPreviewOpen",
@@ -29,6 +21,30 @@ public class PeekAndPopModule: Module {
 
     View(PeekAndPopPreviewView.self) {
       Events("onSetSize")
+
+      Prop("preferredContentSize") { (view: PeekAndPopPreviewView, size: [String: Int]) in
+        let width = size["width", default: 0]
+        let height = size["height", default: 0]
+
+        guard width >= 0, height >= 0 else {
+          print("Preferred content size cannot be negative (\(width), \(height))")
+          return
+        }
+
+        view.preferredContentSize = CGSize(
+          width: width,
+          height: height
+        )
+      }
+    }
+
+    View(PeekAndPopActionView.self) {
+      Prop("id") { (view: PeekAndPopActionView, id: String) in
+        view.id = id
+      }
+      Prop("title") { (view: PeekAndPopActionView, title: String) in
+        view.title = title
+      }
     }
 
     View(PeekAndPopTriggerView.self) {}

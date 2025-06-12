@@ -2,6 +2,7 @@ import ExpoModulesCore
 import WebKit
 
 class PeekAndPopPreviewView: ExpoView {
+  var preferredContentSize: CGSize = .zero
   let onSetSize = EventDispatcher()
 
   required init(appContext: AppContext? = nil) {

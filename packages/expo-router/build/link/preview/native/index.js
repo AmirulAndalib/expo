@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PeekAndPopTriggerView = exports.PeekAndPopPreviewView = exports.PeekAndPopView = void 0;
+exports.PeekAndPopActionView = exports.PeekAndPopTriggerView = exports.PeekAndPopPreviewView = exports.PeekAndPopView = void 0;
 const react_native_1 = require("react-native");
 const NotAvailableOnThisPlatformComponent = () => {
     console.warn('Peek and pop preview is only available on iOS');
@@ -12,4 +12,6 @@ const PeekAndPopPreviewView = (_) => NotAvailableOnThisPlatformComponent();
 exports.PeekAndPopPreviewView = PeekAndPopPreviewView;
 const PeekAndPopTriggerView = (_) => NotAvailableOnThisPlatformComponent();
 exports.PeekAndPopTriggerView = PeekAndPopTriggerView;
+const PeekAndPopActionView = (_) => NotAvailableOnThisPlatformComponent();
+exports.PeekAndPopActionView = PeekAndPopActionView;
 //# sourceMappingURL=index.js.map
