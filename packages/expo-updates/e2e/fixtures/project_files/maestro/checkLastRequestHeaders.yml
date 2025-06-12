@@ -1,0 +1,16 @@
+appId: dev.expo.updatese2e
+onFlowStart:
+  - runScript: ./maestroUpdatesApi.js
+---
+- launchApp
+- assertVisible:
+    label: Check that app is visible
+    id: updateString
+    text: test
+- assertTrue:
+    condition:  ${output.api.lastRequestHeaders().host == 'localhost:4747'}
+    label: Check that request contains correct headers
+- stopApp
+- evalScript:
+    script:  ${output.api.stopUpdatesServer()}
+    label: Stop server
