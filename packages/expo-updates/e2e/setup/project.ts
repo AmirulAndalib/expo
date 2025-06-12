@@ -943,7 +943,16 @@ export async function setupE2EAppAsync(
 ) {
   await copyCommonFixturesToProject(
     projectRoot,
-    ['tsconfig.json', '.detoxrc.json', 'eas.json', 'eas-hooks', 'e2e', 'includedAssets', 'scripts'],
+    [
+      'tsconfig.json',
+      '.detoxrc.json',
+      'eas.json',
+      'eas-hooks',
+      'e2e',
+      'maestro',
+      'includedAssets',
+      'scripts',
+    ],
     { appJsFileName: 'App.tsx', repoRoot, isTV }
   );
 
@@ -994,7 +1003,16 @@ export async function setupUpdatesDisabledE2EAppAsync(
 ) {
   await copyCommonFixturesToProject(
     projectRoot,
-    ['tsconfig.json', '.detoxrc.json', 'eas.json', 'eas-hooks', 'e2e', 'includedAssets', 'scripts'],
+    [
+      'tsconfig.json',
+      '.detoxrc.json',
+      'eas.json',
+      'eas-hooks',
+      'e2e',
+      'maestro',
+      'includedAssets',
+      'scripts',
+    ],
     {
       appJsFileName: 'App-updates-disabled.tsx',
       repoRoot,
@@ -1021,7 +1039,16 @@ export async function setupUpdatesErrorRecoveryE2EAppAsync(
 ) {
   await copyCommonFixturesToProject(
     projectRoot,
-    ['tsconfig.json', '.detoxrc.json', 'eas.json', 'eas-hooks', 'e2e', 'includedAssets', 'scripts'],
+    [
+      'tsconfig.json',
+      '.detoxrc.json',
+      'eas.json',
+      'eas-hooks',
+      'e2e',
+      'maestro',
+      'includedAssets',
+      'scripts',
+    ],
     { appJsFileName: 'App.tsx', repoRoot, isTV: false }
   );
 
@@ -1051,6 +1078,7 @@ export async function setupUpdatesFingerprintE2EAppAsync(
       'eas.json',
       'eas-hooks',
       'e2e',
+      'maestro',
       'includedAssets',
       'scripts',
     ],
@@ -1076,7 +1104,16 @@ export async function setupUpdatesStartupE2EAppAsync(
 ) {
   await copyCommonFixturesToProject(
     projectRoot,
-    ['tsconfig.json', '.detoxrc.json', 'eas.json', 'eas-hooks', 'e2e', 'includedAssets', 'scripts'],
+    [
+      'tsconfig.json',
+      '.detoxrc.json',
+      'eas.json',
+      'eas-hooks',
+      'e2e',
+      'maestro',
+      'includedAssets',
+      'scripts',
+    ],
     { appJsFileName: 'App.tsx', repoRoot, isTV: false }
   );
 
@@ -1099,7 +1136,16 @@ export async function setupUpdatesBrickingMeasuresDisabledE2EAppAsync(
 ) {
   await copyCommonFixturesToProject(
     projectRoot,
-    ['tsconfig.json', '.detoxrc.json', 'eas.json', 'eas-hooks', 'e2e', 'includedAssets', 'scripts'],
+    [
+      'tsconfig.json',
+      '.detoxrc.json',
+      'eas.json',
+      'eas-hooks',
+      'e2e',
+      'maestro',
+      'includedAssets',
+      'scripts',
+    ],
     { appJsFileName: 'App.tsx', repoRoot, isTV: false }
   );
 
@@ -1122,7 +1168,16 @@ export async function setupUpdatesDevClientE2EAppAsync(
 ) {
   await copyCommonFixturesToProject(
     projectRoot,
-    ['tsconfig.json', '.detoxrc.json', 'eas.json', 'eas-hooks', 'e2e', 'includedAssets', 'scripts'],
+    [
+      'tsconfig.json',
+      '.detoxrc.json',
+      'eas.json',
+      'eas-hooks',
+      'e2e',
+      'maestro',
+      'includedAssets',
+      'scripts',
+    ],
     { appJsFileName: 'App.tsx', repoRoot, isTV: false }
   );
 
