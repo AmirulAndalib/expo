@@ -314,6 +314,11 @@ async function preparePackageJson(
   // Additional scripts and dependencies for Detox testing
   const extraScripts = configureE2E
     ? {
+        'maestro:android:debug:build': 'cd android; ./gradlew :app:assembleDebug; cd ..',
+        'maestro:android:debug:install':
+          'adb install android/app/build/outputs/apk/debug/app-debug.apk',
+        'maestro:android:debug:uninstall': 'adb uninstall dev.expo.updatese2e',
+        'maestro:android:debug:test': './maestro/run-tests.sh',
         'detox:android:debug:build': 'detox build -c android.debug',
         'detox:android:debug:test': 'detox test -c android.debug',
         'detox:android:release:build': 'detox build -c android.release',
